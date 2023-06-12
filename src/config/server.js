@@ -7,10 +7,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors())
 
 
-// const techniqueRouter = require('../modules/technique')
+const recipesRouter = require('../modules/recipes')
 
 
-// app.use('/technique', techniqueRouter)
+app.use('/recipes', recipesRouter)
 
 
 module.exports = app;
