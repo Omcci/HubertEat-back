@@ -9,9 +9,12 @@ app.use(cors())
 
 const recipesRouter = require('../modules/recipes')
 const usersRouter = require('../modules/users')
+const menusRouter = require('../modules/menus')
+
 
 app.use('/recipes', recipesRouter)
 app.use('/users', usersRouter)
+app.use('/menus', menusRouter)
 
 
 
