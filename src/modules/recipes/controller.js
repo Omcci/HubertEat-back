@@ -34,7 +34,7 @@ const putOneRecipe = (req, res) => {
 
   modifyOneRecipe(recipe, id).then((result) => {
     if (result.affectedRows === 1) {
-      res.json({ id, ...user });
+      res.json({ id, ...recipe });
     } else {
       res.status(404).json({ message: "No recipe found with this id !" });
     }
