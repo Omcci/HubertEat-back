@@ -52,7 +52,7 @@
 
 require('dotenv').config()
 const mysql = require('mysql2/promise');
-const dataJson = require("./data.js");
+const dataJson = require("./src/data.js");
 
 
 const dataJSONToMySQL = () => {
