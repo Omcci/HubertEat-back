@@ -8,9 +8,11 @@ app.use(cors())
 
 
 const recipesRouter = require('../modules/recipes')
-
+const usersRouter = require('../modules/users')
 
 app.use('/recipes', recipesRouter)
+app.use('/users', usersRouter)
+
 
 
 module.exports = app;
