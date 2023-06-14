@@ -7,9 +7,35 @@ const findAllMenus = () => {
       return data;
     })
     .catch((err) => {
+      console.error("err", err)
+      return err
+
+    });
+};
+
+const findAllRecipesMenusById = (menus_id) => {
+    return db
+      .query("select r.name, r.img_url from recipes as r join menus_recipes as mr on r.id = mr.recipes_id where menus_id = ?" , [menus_id])
+      .then(([data]) => {
+        return data;
+      })
+      .catch((err) => {
+        console.error("err", err);
+      });
+  };
+
+const findAllRecipesMenus = () => {
+  return db
+    .query("select r.name  from recipes as r join menus_recipes as mr on r.id = mr.recipes_id where menus_id = ?" , [menus_id])
+    .then(([data]) => {
+      return data;
+    })
+    .catch((err) => {
       console.error("err", err);
     });
 };
+
+
 
 const findOneMenu = (id) => {
   return db
@@ -47,6 +73,23 @@ const addMenu = (menu) => {
       console.error(err);
     });
 };
+const addMenuRecipe = (menuRecipe) => {
+  const { menus_id, recipes_id } = menuRecipe;
+  return db
+    .query(
+      "insert into menus_recipes values (?, ?)",
+      [menus_id, recipes_id ]
+    )
+    .then(([data]) => {
+      return { id: data.insertId, ...menuRecipe };
+    })
+    .catch((err) => {
+        console.error(err);
+        return err
+    });
+};
+
+
 
 const removeMenu = (id) => {
   return db
@@ -57,10 +100,14 @@ const removeMenu = (id) => {
     });
 };
 
+
 module.exports = {
     findAllMenus,
     findOneMenu,
     modifyOneMenu,
     addMenu,
     removeMenu,
+    addMenuRecipe,
+    findAllRecipesMenus,
+    findAllRecipesMenusById
 };
