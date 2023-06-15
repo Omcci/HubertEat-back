@@ -6,7 +6,8 @@ const {
     removeMenu,
     addMenuRecipe,
     findAllRecipesMenus,
-    findAllRecipesMenusById
+    findAllRecipesMenusById,
+    removeRecipesMenu
   } = require("./model");
   
   const getAllMenus = (req, res) => {
@@ -59,7 +60,7 @@ const {
   
     modifyOneMenu(menu, id).then((result) => {
       if (result.affectedRows === 1) {
-        res.json({ id, ...menu });
+        res.status(204).json({ id, ...menu });
       } else {
         res.status(404).json({ message: "No menus found with this id !" });
       }
@@ -111,6 +112,29 @@ const {
       })
       .catch((err) => res.status(500).json({ message: "Server error" }));
   };
+
+  const deleteRecipesMenu = (req, res) => {
+    const menus_id = parseInt(req.params.menus_id);
+    const recipes_id = parseInt(req.params.recipes_id);
+    const data = {menus_id, recipes_id}
+    if (isNaN(menus_id)) {
+      res.status(400).json({ message: "Wrong menu id type" });
+    }
+    if (isNaN(recipes_id)) {
+      res.status(400).json({ message: "Wrong recipe id type" });
+    }
+    removeRecipesMenu(data)
+      .then((result) => {
+        if (result.affectedRows === 1) {
+          res.sendStatus(204);
+        } else {
+          res.status(404).json({ message: "No menus found with this id !" });
+        }
+      })
+      .catch((err) => res.status(500).json({ message: "Server error" }));
+  };
+
+  
   
   module.exports = {
     getAllMenus,
@@ -120,6 +144,7 @@ const {
     deleteMenu,
     createMenuRecipe,
     getAllRecipesMenus,
-    getAllRecipesMenusById
+    getAllRecipesMenusById,
+    deleteRecipesMenu
   };
   

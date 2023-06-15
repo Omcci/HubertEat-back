@@ -8,7 +8,8 @@ const {
     deleteMenu,
     createMenuRecipe,
     getAllRecipesMenus,
-    getAllRecipesMenusById
+    getAllRecipesMenusById,
+    deleteRecipesMenu
 } = require("./controller");
 
 router.get("/", getAllMenus);
@@ -19,5 +20,7 @@ router.put("/:id", putOneMenu);
 router.post("/recipes", createMenuRecipe)
 router.post("/", createMenu);
 router.delete("/:id", deleteMenu);
+router.delete("/:menus_id/:recipes_id", deleteRecipesMenu);
+
 
 module.exports = router;
