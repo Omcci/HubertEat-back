@@ -78,7 +78,21 @@ const {
     const menuRecipe = req.body;
   
     addMenuRecipe(menuRecipe)
-      .then((result) => res.status(201).json(result))
+      .then((result) => {
+        if (result.code == 201) {
+        res.status(201).json({...result, code : 201})
+        } else if (result.code == 1062){
+            res.status(500).json({
+                message : "Duplicate entry of recipes into menus",
+                code : 500
+            })
+        } else {
+            res.status(500).json({
+                message : "Intern error",
+                code : 500
+            })
+        }
+    })
       .catch((err) => res.status(500).json({ message: "Server error" }));
   };
   

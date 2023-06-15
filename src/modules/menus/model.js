@@ -15,7 +15,7 @@ const findAllMenus = () => {
 
 const findAllRecipesMenusById = (menus_id) => {
     return db
-      .query("select r.name, r.img_url from recipes as r join menus_recipes as mr on r.id = mr.recipes_id where menus_id = ?" , [menus_id])
+      .query("select r.name, r.img_url, r.id from recipes as r join menus_recipes as mr on r.id = mr.recipes_id where menus_id = ?" , [menus_id])
       .then(([data]) => {
         return data;
       })
@@ -73,6 +73,7 @@ const addMenu = (menu) => {
       console.error(err);
     });
 };
+
 const addMenuRecipe = (menuRecipe) => {
   const { menus_id, recipes_id } = menuRecipe;
   return db
@@ -81,11 +82,11 @@ const addMenuRecipe = (menuRecipe) => {
       [menus_id, recipes_id ]
     )
     .then(([data]) => {
-      return { id: data.insertId, ...menuRecipe };
+      return { code : 201 , id: data.insertId, ...menuRecipe };
     })
     .catch((err) => {
         console.error(err);
-        return err
+        return { code : err.errno , err }
     });
 };
 
